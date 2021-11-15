@@ -5,7 +5,7 @@ import VueCookie from 'vue-cookie'
 import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios'
 import router from '@/router'
-import { format, getYear, getWeek } from 'date-fns'
+import { format, getYear, getISOWeek } from 'date-fns'
 
 Vue.use(Vuex)
 
@@ -102,7 +102,7 @@ const store = new Vuex.Store({
     },
     getWeeklyWork (context) {
       const date = new Date()
-      axios.get(`/api/work-time/weekly-works/?year=${getYear(date)}&week=${getWeek(date)}`)
+      axios.get(`/api/work-time/weekly-works/?year=${getYear(date)}&week=${getISOWeek(date)}`)
         .then((response) => {
           if (response.data.length > 0) {
             context.commit('setWeeklyWork', response.data[0])
